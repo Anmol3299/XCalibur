@@ -22,7 +22,7 @@ TRACE_EVENT(add_device_randomness,
 		__entry->IP		= IP;
 	),
 
-	TP_printk("bytes %d caller %pS",
+	TP_printk("bytes %d caller %pF",
 		__entry->bytes, (void *)__entry->IP)
 );
 
@@ -87,7 +87,7 @@ TRACE_EVENT(credit_entropy_bits,
 		  (void *)__entry->IP)
 );
 
-TRACE_EVENT(get_random_bytes,
+DECLARE_EVENT_CLASS(random__get_random_bytes,
 	TP_PROTO(int nbytes, unsigned long IP),
 
 	TP_ARGS(nbytes, IP),
@@ -103,6 +103,18 @@ TRACE_EVENT(get_random_bytes,
 	),
 
 	TP_printk("nbytes %d caller %pS", __entry->nbytes, (void *)__entry->IP)
+);
+
+DEFINE_EVENT(random__get_random_bytes, get_random_bytes,
+	TP_PROTO(int nbytes, unsigned long IP),
+
+	TP_ARGS(nbytes, IP)
+);
+
+DEFINE_EVENT(random__get_random_bytes, get_random_bytes_arch,
+	TP_PROTO(int nbytes, unsigned long IP),
+
+	TP_ARGS(nbytes, IP)
 );
 
 DECLARE_EVENT_CLASS(random__extract_entropy,
