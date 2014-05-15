@@ -1,4 +1,6 @@
-ccflags-y := -Iinclude/uapi/drm -Iinclude/drm -Idrivers/gpu/msm  -O3 -ffast-math -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -fsingle-precision-constant -mcpu=cortex-a53 -mtune=cortex-a53
+ccflags-y := -Iinclude/uapi/drm -Iinclude/drm -Idrivers/gpu/msm -O3
+ccflags-y += -ffast-math -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr
+ccflags-y += -fsingle-precision-constant -march=armv8-a -mtune=cortex-a53
 
 msm_kgsl_core-y = \
 	kgsl.o \
