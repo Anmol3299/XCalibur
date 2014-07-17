@@ -846,6 +846,7 @@ static inline struct kobject *get_glue_dir(struct device *dev)
 * sure .release handler of kobject is run with holding the
 * global lock
 */
+
 static void cleanup_glue_dir(struct device *dev, struct kobject *glue_dir)
 {
 	/* see if we live in a "glue" directory */
