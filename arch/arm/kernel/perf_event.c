@@ -289,7 +289,11 @@ validate_event(struct pmu *pmu, struct pmu_hw_events *hw_events,
 	if (event->pmu != pmu)
 		return 0;
 
+<<<<<<< HEAD
         if (event->pmu != leader_pmu || event->state < PERF_EVENT_STATE_OFF)
+=======
+	if (event->state < PERF_EVENT_STATE_OFF)
+>>>>>>> 2961166... ARM: perf: reject groups spanning multiple hardware PMUs
 		return 1;
 
 	if (event->state == PERF_EVENT_STATE_OFF && !event->attr.enable_on_exec)
