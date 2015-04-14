@@ -74,8 +74,7 @@ static unsigned long mmap_rnd(void)
 	* 28 bits of randomness in 64bit mmaps, 40 address space bits
 	*/
 	if (mmap_is_ia32())
-	  {
-  {	rnd = (unsigned long)get_random_int() % (1<<8);
+		rnd = (unsigned long)get_random_int() % (1<<8);
 	else
 		rnd = (unsigned long)get_random_int() % (1<<28);
 
@@ -112,7 +111,7 @@ static unsigned long mmap_legacy_base(unsigned long rnd)
  */
 void arch_pick_mmap_layout(struct mm_struct *mm)
 {
-        unsigned long random_factor = 0UL;
+	unsigned long random_factor = 0UL;
 
 	if (current->flags & PF_RANDOMIZE)
 		random_factor = mmap_rnd();
