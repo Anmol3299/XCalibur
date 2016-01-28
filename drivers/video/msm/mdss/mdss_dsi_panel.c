@@ -29,6 +29,12 @@
 #include <linux/powersuspend.h>
 #endif
 
+
+#include <linux/display_state.h>
+
+#define MDSS_PANEL_DEFAULT_VER 0xffffffffffffffff
+#define MDSS_PANEL_UNKNOWN_NAME "unknown"
+
 #define DT_CMD_HDR 6
 
 #ifdef CONFIG_MACH_LONGCHEER
@@ -53,6 +59,13 @@ char g_lcm_id[128];
 #endif
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
+
+bool display_on = true;
+
+bool is_display_on(void)
+{
+	return display_on;
+}
 
 void mdss_dsi_panel_pwm_cfg(struct mdss_dsi_ctrl_pdata *ctrl)
 {
@@ -665,6 +678,7 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		return -EINVAL;
 	}
 
+
 #ifdef CONFIG_MACH_T86519A1
 	gpio_set_value(TPS65132_GPIO_POS_EN, 1);
 	gpio_set_value(TPS65132_GPIO_NEG_EN, 1);
@@ -673,6 +687,9 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 #ifdef CONFIG_POWERSUSPEND
        set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
 #endif
+
+	display_on = true;
+
 
 	pinfo = &pdata->panel_info;
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
@@ -725,6 +742,7 @@ static int mdss_dsi_post_panel_on(struct mdss_panel_data *pdata)
 		mdss_dsi_panel_cmds_send(ctrl, on_cmds);
 	}
 
+
 end:
 	pr_debug("%s:-\n", __func__);
 	return 0;
@@ -762,6 +780,8 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 #ifdef CONFIG_POWERSUSPEND
        set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
 #endif
+
+	display_on = false;
 
 end:
 	pinfo->blank_state = MDSS_PANEL_BLANK_BLANK;
