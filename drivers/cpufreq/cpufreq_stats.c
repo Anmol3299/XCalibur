@@ -515,10 +515,8 @@ static void create_all_freq_table(void)
 static void free_all_freq_table(void)
 {
 	if (all_freq_table) {
-		if (all_freq_table->freq_table) {
-			kfree(all_freq_table->freq_table);
-			all_freq_table->freq_table = NULL;
-		}
+		kfree(all_freq_table->freq_table);
+		all_freq_table->freq_table = NULL;
 		kfree(all_freq_table);
 		all_freq_table = NULL;
 	}
