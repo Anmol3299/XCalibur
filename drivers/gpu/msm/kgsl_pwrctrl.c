@@ -926,7 +926,7 @@ static ssize_t kgsl_pwrctrl_default_pwrlevel_store(struct device *dev,
 	if (ret)
 		return ret;
 
-	if (level > pwr->num_pwrlevels - 2)
+	if (level > pwr->num_pwrlevels - 1)
 		goto done;
 
 	mutex_lock(&device->mutex);
