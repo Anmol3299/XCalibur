@@ -1263,9 +1263,9 @@ static const u32 prio_to_wmult[40] = {
 #define ENQUEUE_WAKEUP		1
 #define ENQUEUE_HEAD		2
 #ifdef CONFIG_SMP
-#define ENQUEUE_WAKING		4	/* sched_class::task_waking was called */
+#define ENQUEUE_MIGRATED	4
 #else
-#define ENQUEUE_WAKING		0
+#define ENQUEUE_MIGRATED	0
 #endif
 
 #define DEQUEUE_SLEEP		1
