@@ -57,7 +57,6 @@
 #include <linux/compat.h>
 
 #include <linux/resource.h>
-#include <linux/ksm.h>
 
 
 #include <asm/uaccess.h>
