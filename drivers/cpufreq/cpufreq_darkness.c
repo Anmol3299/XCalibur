@@ -73,7 +73,7 @@ static struct workqueue_struct *darkness_wq;
 static struct darkness_tuners {
 	unsigned int sampling_rate;
 } darkness_tuners_ins = {
-	.sampling_rate = 60000,
+	.sampling_rate = 30000,
 };
 
 /************************** sysfs interface ************************/
