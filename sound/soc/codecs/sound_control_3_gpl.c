@@ -201,7 +201,7 @@ int snd_hax_reg_access(unsigned int reg)
 	return ret;
 }
 EXPORT_SYMBOL(snd_hax_reg_access);
-
+/*
 #ifdef UNSUPPORTED_MSM8x16_WCD
 static ssize_t cam_mic_gain_show(struct kobject *kobj,
 		struct kobj_attribute *attr, char *buf)
@@ -257,7 +257,7 @@ static ssize_t mic_gain_store(struct kobject *kobj,
 	return count;
 
 }
-
+*/
 static ssize_t speaker_gain_show(struct kobject *kobj,
 		struct kobj_attribute *attr, char *buf)
 {
@@ -468,6 +468,7 @@ static struct kobj_attribute sound_reg_write_attribute =
 		NULL,
 		sound_reg_write_store);
 
+/*
 #ifdef UNSUPPORTED_MSM8x16_WCD
 static struct kobj_attribute cam_mic_gain_attribute =
 	__ATTR(gpl_cam_mic_gain,
@@ -481,7 +482,7 @@ static struct kobj_attribute mic_gain_attribute =
 		0666,
 		mic_gain_show,
 		mic_gain_store);
-
+*/
 static struct kobj_attribute speaker_gain_attribute =
 	__ATTR(gpl_speaker_gain,
 		0666,
@@ -526,10 +527,10 @@ static struct kobj_attribute sound_control_enabled_attribute =
 
 static struct attribute *sound_control_attrs[] =
 	{
-#ifdef UNSUPPORTED_MSM8x16_WCD
+/*#ifdef UNSUPPORTED_MSM8x16_WCD
 		&cam_mic_gain_attribute.attr,
 #endif
-		&mic_gain_attribute.attr,
+		&mic_gain_attribute.attr,*/
 		&speaker_gain_attribute.attr,
 		&headphone_gain_attribute.attr,
 #ifdef UNSUPPORTED_MSM8x16_WCD
