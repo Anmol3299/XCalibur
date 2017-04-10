@@ -3,3 +3,11 @@ config THUNDERPLUG_CONTROL
 	help
 	  This driver uses powersuspend to take down the cpu cores
 	  on a octa core device.
+config CORE_CONTROL
+       bool "Shoaib's Core Control, a thermal based HotPlug."
+       depends on FRANCO_THERMAL
+       default y
+       help
+	    A Thermal Based Automatic HotPlug Driver capable of disabling 
+            the whole big Cluster for better Heat management, 
+	    built by Shoaib0597 a.k.a. Shoaib0597.
