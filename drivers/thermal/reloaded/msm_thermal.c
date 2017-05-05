@@ -60,13 +60,11 @@ unsigned int temp_threshold = 50;
 module_param(temp_threshold, int, 0644);
 unsigned int temp_step = 4;
 module_param(temp_step, int, 0644);
-static unsigned int safety = 1;
-module_param_named(temp_safety, safety, int, 0664);
 
 
 static struct thermal_info {
-	uint32_t cpuinfo_max_freq;
-	uint32_t limited_max_freq;
+	unsigned long int cpuinfo_max_freq;
+	unsigned long int limited_max_freq;
 	bool throttling;
 	bool pending_change;
 } info = {
@@ -90,17 +88,7 @@ static struct msm_thermal_data msm_thermal_info;
 static struct delayed_work check_temp_work;
 static struct workqueue_struct *thermal_wq;
 
-static void cpu_offline_wrapper(int cpu)
-{
-        if (cpu_online(cpu))
-			cpu_down(cpu);
-}
 
-static void __ref cpu_online_wrapper(int cpu)
-{
-        if (!cpu_online(cpu))
-			cpu_up(cpu);
-}
 
 static int msm_thermal_cpufreq_callback(struct notifier_block *nfb,
 		unsigned long event, void *data)
@@ -120,7 +108,7 @@ static struct notifier_block msm_thermal_cpufreq_notifier = {
 	.notifier_call = msm_thermal_cpufreq_callback,
 };
 
-static void limit_cpu_freqs(uint32_t max_freq)
+static void limit_cpu_freqs(unsigned long int max_freq)
 {
 	unsigned int cpu;
 
@@ -133,7 +121,7 @@ static void limit_cpu_freqs(uint32_t max_freq)
 	get_online_cpus();
 	for_each_online_cpu(cpu) {
 		cpufreq_update_policy(cpu);
-		pr_info("%s: Setting cpu%d max frequency to %d\n",
+		pr_info("%s: Setting cpu%d max frequency to %lu \n",
 				KBUILD_MODNAME, cpu, info.limited_max_freq);
 	}
 	
@@ -170,33 +158,6 @@ static void check_temp(struct work_struct *work)
 	else
 		freq = info.cpuinfo_max_freq;
 	
-	if(safety==1){
-		if (temp >= (temp_threshold + 3*temp_step)){
-		    cpu_offline_wrapper(1);
-		    cpu_offline_wrapper(2);
-		    cpu_offline_wrapper(3);
-		    cpu_offline_wrapper(6);
-		    cpu_offline_wrapper(7);
-		}else if (temp >= (temp_threshold + 2*temp_step) && temp < (temp_threshold + 3*temp_step)){
-		    cpu_offline_wrapper(1);
-		    cpu_offline_wrapper(2);
-		    cpu_offline_wrapper(3);
-		    cpu_online_wrapper(6);
-		    cpu_online_wrapper(7);
-		}else if (temp >= (temp_threshold + temp_step) && temp < (temp_threshold + 2*temp_step)){
-		    cpu_online_wrapper(1);
-		    cpu_offline_wrapper(2);
-		    cpu_offline_wrapper(3);
-		    cpu_online_wrapper(6);
-		    cpu_online_wrapper(7);
-		}else if (temp >= temp_threshold && temp < (temp_threshold + temp_step)){
-			cpu_online_wrapper(1);
-		    cpu_online_wrapper(2);
-		    cpu_offline_wrapper(3);
-		    cpu_online_wrapper(6);
-		    cpu_online_wrapper(7);
-		}
-	}
 	if (freq) {
 		limit_cpu_freqs(freq);
 
@@ -205,7 +166,7 @@ static void check_temp(struct work_struct *work)
 	}
 
 reschedule:
-	queue_delayed_work(thermal_wq, &check_temp_work, msecs_to_jiffies(250));
+	queue_delayed_work(system_power_efficient_wq, &check_temp_work, msecs_to_jiffies(250));
 }
 
 static int msm_thermal_dev_probe(struct platform_device *pdev)
@@ -236,7 +197,7 @@ static int msm_thermal_dev_probe(struct platform_device *pdev)
 	}
 
 	INIT_DELAYED_WORK(&check_temp_work, check_temp);
-	queue_delayed_work(thermal_wq, &check_temp_work, 5);
+	queue_delayed_work(system_power_efficient_wq, &check_temp_work, 5);
 
 err:
 	return ret;
@@ -276,5 +237,5 @@ static void __exit msm_thermal_device_exit(void)
 	platform_driver_unregister(&msm_thermal_device_driver);
 }
 
-late_initcall(msm_thermal_device_init);
+arch_initcall(msm_thermal_device_init);
 module_exit(msm_thermal_device_exit);
