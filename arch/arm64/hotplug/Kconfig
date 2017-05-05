@@ -3,3 +3,9 @@ config THUNDERPLUG_CONTROL
 	help
 	  This driver uses powersuspend to take down the cpu cores
 	  on a octa core device.
+
+config LAZYPLUG
+	bool "Conservative hotplugging for generic devices"
+	default n
+	help
+	  This enables the conservative hotplugging, lazyplug by arter97 based on intelli_plug. Refer to the comments for more info.
