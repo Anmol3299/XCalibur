@@ -60,6 +60,8 @@ char g_lcm_id[128];
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
 
+extern void lazyplug_enter_lazy(bool enter, bool video);
+
 bool display_on = true;
 
 bool is_display_on(void)
@@ -689,6 +691,7 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 #endif
 
 	display_on = true;
+	lazyplug_enter_lazy(false, false);
 
 
 	pinfo = &pdata->panel_info;
@@ -782,6 +785,8 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 #endif
 
 	display_on = false;
+	lazyplug_enter_lazy(true, false);
+
 
 end:
 	pinfo->blank_state = MDSS_PANEL_BLANK_BLANK;
