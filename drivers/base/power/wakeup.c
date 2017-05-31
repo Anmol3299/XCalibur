@@ -31,6 +31,10 @@ static bool enable_bluesleep_ws = true;
 module_param(enable_bluesleep_ws, bool, 0644);
 static bool enable_ipa_ws = false;
 module_param(enable_ipa_ws, bool, 0644);
+static bool enable_si_ws = true;
+module_param(enable_si_ws, bool, 0644);
+static bool enable_msm_hsic_ws = true;
+module_param(enable_msm_hsic_ws, bool, 0644);
 
 /*
  * If set, the suspend/hibernate code will abort transitions to a sleep state
@@ -501,7 +505,9 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 			!strcmp(ws->name, "bluedroid_timer"))||
 		(!enable_bluesleep_ws && !strcmp(ws->name, "bluesleep")) ||
 		(!enable_ipa_ws &&
-			!strcmp(ws->name, "IPA_WS"))) {
+			!strcmp(ws->name, "IPA_WS")) ||
+                (!enable_si_ws && !strcmp(ws->name, "sensor_ind")) ||
+                (!enable_msm_hsic_ws && !strcmp(ws->name, "msm_hsic_host"))) {
 		/*
 		 * let's try and deactivate this wakeup source since the user
 		 * clearly doesn't want it. The user is responsible for any
