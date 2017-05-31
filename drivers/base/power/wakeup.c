@@ -492,7 +492,7 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 {
 	unsigned int cec;
 
-	if (((!enable_wlan_rx_wake_ws && !strcmp(ws->name, "wlan_rx_wake")) ||
+	if ((!enable_wlan_rx_wake_ws && !strcmp(ws->name, "wlan_rx_wake")) ||
 		(!enable_wlan_ctrl_wake_ws &&
 			!strcmp(ws->name, "wlan_ctrl_wake")) ||
 		(!enable_wlan_wake_ws &&
@@ -500,7 +500,6 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 		(!enable_bluedroid_timer_ws &&
 			!strcmp(ws->name, "bluedroid_timer"))||
 		(!enable_bluesleep_ws && !strcmp(ws->name, "bluesleep")) ||
-			!strcmp(ws->name, "bluedroid_timer")) ||
 		(!enable_ipa_ws &&
 			!strcmp(ws->name, "IPA_WS"))) {
 		/*
