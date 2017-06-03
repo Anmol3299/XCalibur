@@ -457,6 +457,7 @@ static void cpufreq_interactive_timer(unsigned long data)
 	bool skip_hispeed_logic, skip_min_sample_time;
 	bool policy_max_fast_restore = false;
 	bool jump_to_max = false;
+	unsigned int this_hispeed_freq;
 	bool display_on = is_display_on();
 
 	if (!down_read_trylock(&ppol->enable_sem))
