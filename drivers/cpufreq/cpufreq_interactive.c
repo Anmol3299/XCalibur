@@ -459,6 +459,7 @@ static void cpufreq_interactive_timer(unsigned long data)
 	bool jump_to_max = false;
 	unsigned int this_hispeed_freq;
 	bool display_on = is_display_on();
+        unsigned int MAX_LOCAL_LOAD;
 
 	if (!down_read_trylock(&ppol->enable_sem))
 		return;
