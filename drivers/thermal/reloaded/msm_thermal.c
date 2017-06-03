@@ -56,9 +56,9 @@
 #define CPU_DEVICE "cpu%d"
 
 /* Throttle CPU when it reaches a certain temp*/
-unsigned int temp_threshold = 50;
+unsigned int temp_threshold = 60;
 module_param(temp_threshold, int, 0644);
-unsigned int temp_step = 4;
+unsigned int temp_step = 5;
 module_param(temp_step, int, 0644);
 
 
@@ -75,13 +75,13 @@ static struct thermal_info {
 };
 
 /* Configurable throttle points in MHz */
-unsigned int freq_hell = 800000;
+unsigned int freq_hell = 533330;
 module_param(freq_hell, int, 0644);
-unsigned int freq_very_hot = 1113600;
+unsigned int freq_very_hot = 800000;
 module_param(freq_very_hot, int, 0644);
-unsigned int freq_hot = 1344000;
+unsigned int freq_hot = 960000;
 module_param(freq_hot, int, 0644);
-unsigned int freq_warm = 1459200;
+unsigned int freq_warm = 1113600;
 module_param(freq_warm, int, 0644);
 
 static struct msm_thermal_data msm_thermal_info;
