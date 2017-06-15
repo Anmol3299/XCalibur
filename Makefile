@@ -348,19 +348,19 @@ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 
 GRAPHITE	= -fgraphite -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block
 # ak flags optimization
-+ARM64_ARCH_OPT := -mcpu=cortex-a53 -mtune=cortex-a53 \
-                   -g0 \
-                   -DNDEBUG \
-                   -fomit-frame-pointer \
-                   -fmodulo-sched \
-                   -fmodulo-sched-allow-regmoves \
-                   -fivopts \
-                   -ffast-math \
-                   -fgcse-lm \
-                   -fgcse-sm \
-                   -fsched-spec-load \
-                   -fforce-addr \
-                   -fsingle-precision-constant
+ARM64_ARCH_OPT := -mcpu=cortex-a53 -mtune=cortex-a53 \
+                  -g0 \
+                  -DNDEBUG \
+                  -fomit-frame-pointer \
+                  -fmodulo-sched \
+                  -fmodulo-sched-allow-regmoves \
+                  -fivopts \
+                  -ffast-math \
+                  -fgcse-lm \
+                  -fgcse-sm \
+                  -fsched-spec-load \
+                  -fforce-addr \
+                  -fsingle-precision-constant
 
 CFLAGS_MODULE   =
 AFLAGS_MODULE   =
@@ -395,7 +395,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-maybe-uninitialized \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks
+		   -fno-delete-null-pointer-checks \
 		   -Wno-sequence-point \
 		   -Wno-unused-function \
 		   -std=gnu89 \
