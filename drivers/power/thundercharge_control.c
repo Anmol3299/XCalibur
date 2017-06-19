@@ -27,7 +27,7 @@ int custom_current = AC_CURRENT;
 int custom_usb_current = USB_CURRENT;
 
 #define DRIVER_VERSION  2
-#define DRIVER_SUBVER   1
+#define DRIVER_SUBVER   5
 
 static ssize_t mswitch_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
 {
