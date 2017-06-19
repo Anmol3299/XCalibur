@@ -164,4 +164,4 @@ module_init(charger_control_probe);
 module_exit(charger_control_remove);
 MODULE_LICENSE("GPL and additional rights");
 MODULE_AUTHOR("Varun Chitre <varun.chitre15@gmail.com>");
-MODULE_DESCRIPTION("BQ24157 Charger control driver");
+MODULE_DESCRIPTION("BQ24157/FAN5405 Charger control driver");
