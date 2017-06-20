@@ -14,9 +14,6 @@
  *
  */
 #include <linux/module.h>
-#include <linux/kobject.h>
-#include <linux/sysfs.h>
-#include <linux/kernel.h>
 #include "thundercharge_control.h"
 
 #define ENABLED             0
