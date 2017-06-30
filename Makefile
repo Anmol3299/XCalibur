@@ -327,7 +327,9 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
+LD	       += -O2 --strip-debug
 CC		= $(CCACHE) $(CROSS_COMPILE)gcc
+CC	       += -O2 -fmodulo-sched -fmodulo-sched-allow-regmoves
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
