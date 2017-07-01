@@ -61,7 +61,7 @@ static struct kobject *cc_kobj;
 extern int AiO_HotPlug;
 #endif
 
-#if (NR_CPUS == 8)	// Assume Octa-Core SoCs to be based on big.LITTLE architecture.
+#if (NR_CPUS == 6 || NR_CPUS == 8)	// Assume Hexa/Octa-Core SoCs to be based on big.LITTLE architecture.
 // Permission to Disable Core 0 Toggle.
 extern bool hotplug_boost;
 #endif
@@ -221,6 +221,7 @@ static void __ref check_temp(struct work_struct *work)
 	tsens_dev.sensor_num = msm_thermal_info.sensor_id;
 	tsens_get_temp(&tsens_dev, &temp);
 
+	#if (NR_CPUS == 6 || NR_CPUS == 8)
 	// Switch on Core 0 again as soon as Permission to disable it is denied.
 	if (!cpu_online(0))
 	{
@@ -228,6 +229,7 @@ static void __ref check_temp(struct work_struct *work)
 	   if (hotplug_boost == false)
 	      cpu_up(0);
 	}
+	#endif
 
 	#ifdef CONFIG_CORE_CONTROL
 	// Begin HotPlug Mechanism for Shoaib's Core Control
