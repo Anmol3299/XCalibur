@@ -40,10 +40,14 @@
 #include <linux/of.h>
 
 // Temp Threshold is the LOWEST Level to Start Throttling.
-#define _temp_threshold		50
+#define _temp_threshold		55
+
+// Temperature Step (manages the GAPs between Different Thermal Throttle Points).
+#define _temp_step		5
 
 int TEMP_THRESHOLD 	= _temp_threshold;
-int LEVEL_HOT 		= _temp_threshold + 5;
+int TEMP_STEP 		= _temp_step;
+int LEVEL_HOT 		= _temp_threshold + _temp_step;
 int FREQ_HOT 		= 800000;
 int FREQ_WARM 		= 1113600;
 
@@ -78,7 +82,7 @@ static int set_temp_threshold(const char *val, const struct kernel_param *kp)
 	if (i < 40 || i > 90)
 	   return -EINVAL;
 	
-	LEVEL_HOT      = i + 5;
+	LEVEL_HOT      = i + TEMP_STEP;
 	
 	ret = param_set_int(val, kp);
 
@@ -91,6 +95,33 @@ static struct kernel_param_ops temp_threshold_ops = {
 };
 
 module_param_cb(temp_threshold, &temp_threshold_ops, &TEMP_THRESHOLD, 0644);
+
+/* Temperature Step Storage */
+static int set_temp_step(const char *val, const struct kernel_param *kp)
+{
+	int ret = 0;
+	int i;
+
+	ret = kstrtouint(val, 10, &i);
+	if (ret)
+	   return -EINVAL;
+	// Restrict the Values to 1-6 for the Purpose of Safety.
+	if (i < 1 || i > 6)
+	   return -EINVAL;
+	
+	LEVEL_HOT = TEMP_THRESHOLD + i;
+	
+	ret = param_set_int(val, kp);
+
+	return ret;
+}
+
+static struct kernel_param_ops temp_step_ops = {
+	.set = set_temp_step,
+	.get = param_get_int,
+};
+
+module_param_cb(temp_step, &temp_step_ops, &TEMP_STEP, 0644);
 
 /* Frequency Limit Storage */
 static int set_freq_limit(const char *val, const struct kernel_param *kp)
