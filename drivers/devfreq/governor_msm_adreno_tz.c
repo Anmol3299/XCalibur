@@ -518,16 +518,6 @@ static int tz_stop(struct devfreq *devfreq)
 }
 
 
-static int tz_resume(struct devfreq *devfreq)
-{
-	struct devfreq_dev_profile *profile = devfreq->profile;
-	unsigned long freq;
-
-	freq = profile->initial_freq;
-
-	return profile->target(devfreq->dev.parent, &freq, 0);
-}
-
 static int tz_suspend(struct devfreq *devfreq)
 {
 	struct devfreq_msm_adreno_tz_data *priv = devfreq->data;
